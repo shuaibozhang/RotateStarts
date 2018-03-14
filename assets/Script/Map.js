@@ -6,6 +6,7 @@ var MapState = cc.Enum({
 
 var mapTool = require('MapTools');
 var gameEvents = require('GameEvent');
+var moveMgr = require('MoveMgr');
 
 cc.Class({
     extends: cc.Component,
@@ -25,10 +26,13 @@ cc.Class({
     // use this for initialization
     onLoad: function () {
         var testMap = [
-            [1, 1, 1, 1],
-            [1, 4, 3, 1],
-            [1, 0, 2, 1],
-            [1, 1, 1, 1],
+            [1, 1, 1, 1, 1,1,1],
+            [1, 2, 0, 0, 0,0,1],
+            [1, 0, 3, 0, 0,0,1],
+            [1, 0, 0, 1, 2,0,1],
+            [1, 0, 2, 3, 1,0,1],
+            [1, 3, 0, 0, 0,0,1],
+            [1, 0, 0, 1, 1,1,1],
         ];
 
         this.createMap(testMap);
@@ -59,24 +63,24 @@ cc.Class({
     },
     /**
      * 创建地图元素
-     * id == 0 创建静态的砖块
-     * id == 1 创建可移动的砖块
-     * id == 2 创建玩家
-     * id == 3 创建目标位置的砖块
+     * id == 1 创建静态的砖块
+     * id == 2 创建可移动的砖块
+     * id == 3 创建玩家
+     * id == 4 创建目标位置的砖块
      * @param  {Integer}   elementid 元素的id
      * @return {Object} 元素实例
      */
     createElementById: function (elementid) {
-        if(elementid == 1){
+        if(elementid == gameEvents.MAP_STATIC){
             return cc.instantiate(this.elementStaticSquare);
         }
-        else if(elementid == 2){
+        else if(elementid == gameEvents.MAP_MOVE){
             return cc.instantiate(this.elementMoveableSquare);
         }
-        else if(elementid == 3){
+        else if(elementid == gameEvents.MAP_PLAYER){
             return cc.instantiate(this.elementPlayerSquare);
         }
-        else if (elementid == 4) {
+        else if (elementid == gameEvents.MAP_TARGET) {
             return cc.instantiate(this.elementTargetSquare);
         }
         else {
@@ -85,41 +89,77 @@ cc.Class({
     },
 
     rotateLeft: function () {
-        if (this.mapState == MapState.MAP_ROTATE) {
+        if (this.mapState != MapState.MAP_IDLE) {
             return;
         }
         var self = this;
         this.mapState = MapState.MAP_ROTATE;
         this.rotate = this.rotate - 90;
-        var action = cc.rotateBy(1, -90);
+        var action = cc.rotateBy(0.5, -90);
         var action2 = cc.callFunc(function () {
             self.enterCheckDown();
         })
         this.node.runAction(cc.sequence(action, action2));
-
         mapTool.rotateLeft(this.mapArray);
         mapTool.rotateLeft(this.mapElement);
     },
 
     rotateRight: function () {
-        if (this.mapState == MapState.MAP_ROTATE){
+        if (this.mapState != MapState.MAP_IDLE) {
             return;
         }
         var self = this;
         this.mapState = MapState.MAP_ROTATE;
         this.rotate = this.rotate + 90;
-        var action = cc.rotateBy(1, 90);
+        var action = cc.rotateBy(0.5, 90);
         var action2 = cc.callFunc(function () {
             self.enterCheckDown();
         })
         this.node.runAction(cc.sequence(action, action2));
-
         mapTool.rotateRight(this.mapArray);
         mapTool.rotateRight(this.mapElement);
+
     },
 
     enterCheckDown: function () {
+        var self = this;
         this.mapState = MapState.MAP_DOWN;
+        var n =  this.mapArray.length;
+        for(var i = this.mapArray.length - 1; i >= 0; i--){
+            var line =  this.mapArray[i];
+            for(var j = 0; j < line.length; j++){
+                if(line[j] == gameEvents.MAP_MOVE || line[j] == gameEvents.MAP_PLAYER){
+                    var downLength = 0;
+                    var next = i + 1;
+                    while(next < n && this.mapArray[next][j] == gameEvents.MAP_EMPTY){
+                        downLength++;
+                        next++;
+                    }
+                    next--;
+                    next = next >= n ? n - 1:next;
+
+                    if(downLength > 0){
+                        var temp = this.mapArray[i][j];
+                        this.mapArray[i][j] =  gameEvents.MAP_EMPTY;
+                        this.mapArray[next][j] = temp;
+
+                        var temp2 = this.mapElement[i][j];
+                        this.mapElement[i][j] = this.mapElement[next][j];
+                        this.mapElement[next][j] = temp2;               
+                        
+                        var worldPos = temp2.convertToWorldSpaceAR(cc.v2(0, 0));
+                        worldPos.y = worldPos.y - downLength * this.tiledSize;
+                        var newVec2 = temp2.parent.convertToNodeSpaceAR(worldPos);
+                        moveMgr.addMove(temp2, newVec2, 0.1 * downLength);
+                    }
+                }
+            }
+        }
+
+        moveMgr.doMove(this.node, function(){
+            self.mapState = MapState.MAP_IDLE;
+        });
+
     },
 
     registerEvent: function () {
