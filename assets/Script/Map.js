@@ -2,6 +2,7 @@ var MapState = cc.Enum({
     MAP_IDLE: 1,
     MAP_ROTATE: 2,
     MAP_DOWN: 3,
+    MAP_FINISH: 4,
 });
 
 var mapTool = require('MapTools');
@@ -32,7 +33,7 @@ cc.Class({
             [1, 0, 0, 1, 2,0,1],
             [1, 0, 2, 3, 1,0,1],
             [1, 3, 0, 0, 0,0,1],
-            [1, 0, 0, 1, 1,1,1],
+            [1, 0, 4, 1, 1,1,1],
         ];
 
         this.createMap(testMap);
@@ -123,6 +124,7 @@ cc.Class({
 
     enterCheckDown: function () {
         var self = this;
+        var isEnd = false;
         this.mapState = MapState.MAP_DOWN;
         var n =  this.mapArray.length;
         for(var i = this.mapArray.length - 1; i >= 0; i--){
@@ -131,13 +133,21 @@ cc.Class({
                 if(line[j] == gameEvents.MAP_MOVE || line[j] == gameEvents.MAP_PLAYER){
                     var downLength = 0;
                     var next = i + 1;
-                    while(next < n && this.mapArray[next][j] == gameEvents.MAP_EMPTY){
-                        downLength++;
-                        next++;
+                    while(next < n){
+                        if (line[j] == gameEvents.MAP_PLAYER && this.mapArray[next][j] == gameEvents.MAP_TARGET) {
+                            downLength++;
+                            next++;
+                            isEnd = true;                    
+                        }
+                        else if(this.mapArray[next][j] == gameEvents.MAP_EMPTY) {
+                            downLength++;
+                            next++;
+                        }
+                        else{
+                            break;
+                        }
                     }
                     next--;
-                    next = next >= n ? n - 1:next;
-
                     if(downLength > 0){
                         var temp = this.mapArray[i][j];
                         this.mapArray[i][j] =  gameEvents.MAP_EMPTY;
@@ -158,6 +168,9 @@ cc.Class({
 
         moveMgr.doMove(this.node, function(){
             self.mapState = MapState.MAP_IDLE;
+            if(isEnd){
+                self.mapState = MapState.MAP_FINISH;
+            }
         });
 
     },

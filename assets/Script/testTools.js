@@ -1,3 +1,14 @@
+var gameEvents = {}
+
+gameEvents.EVENT_ROTATE_LEFT = "rotate_left";
+gameEvents.EVENT_ROTATE_RIGHT = "rotate_right";
+
+gameEvents.MAP_EMPTY = 0;
+gameEvents.MAP_STATIC = 1;
+gameEvents.MAP_MOVE = 2;
+gameEvents.MAP_PLAYER = 3;
+gameEvents.MAP_TARGET = 4;
+
 var MapTools = {}
 /**
  * 旋转90 数组要求是正方形
@@ -35,7 +46,6 @@ MapTools.rotateLeft = function (arrayObject) {
     }
 }
 
-var gameEvents = require('GameEvent');
 var checkIsFinish = function (mapArray) {
     var n = mapArray.length;
     for (var i = mapArray.length - 1; i >= 0; i--) {
@@ -50,13 +60,19 @@ var checkIsFinish = function (mapArray) {
                         next++;
                         return true;
                     }
-                    else if (this.mapArray[next][j] == gameEvents.MAP_EMPTY) {
+                    else if (mapArray[next][j] == gameEvents.MAP_EMPTY) {
                         downLength++;
                         next++;
                     }
                     else {
                         break;
                     }
+                }
+                next--;
+                if (downLength > 0) {
+                    var temp = mapArray[i][j];
+                    mapArray[i][j] = gameEvents.MAP_EMPTY;
+                    mapArray[next][j] = temp;
                 }
             }
         }
@@ -65,17 +81,32 @@ var checkIsFinish = function (mapArray) {
     return false;
 }
 
-MapTools.calculateFastStep = function (arrayObject) {
+function copyArr(arr) {
+    let res = []
+    for (let i = 0; i < arr.length; i++) {
+        let inarray = [];
+        for (let j = 0; j < arr[i].length; j++){
+            inarray.push(arr[i][j]);
+        }
+        res.push(inarray)
+    }
+    return res
+}
+
+var calculateFastStep = function (arrayObject) {
     var actions = [];
     var checkElements = [];
-    
+
     var idx = 0;
     var find = false;
+    
+    var lefta = copyArr(arrayObject);
+    var righta = copyArr(arrayObject);
 
-    var temp = MapTools.rotateLeft(arrayObject.slice(0));
-    var left = { 'action': "left", 'array': temp};
-    temp = MapTools.rotateRight(arrayObject.slice(0));
-    var right = { 'action': "right", 'array': temp };
+    MapTools.rotateLeft(lefta);
+    var left = { 'action': "left", 'array': lefta, 'parent':"o"};
+    MapTools.rotateRight(righta);
+    var right = { 'action': "right", 'array': righta, 'parent': "o"};
     checkElements.push(left);
     checkElements.push(right);
 
@@ -83,18 +114,38 @@ MapTools.calculateFastStep = function (arrayObject) {
         var temp = checkElements[idx];
         idx++;
         find = checkIsFinish(temp.array);
-        actions.push(temp.action);
-        if(find == false){
-            var arrayObject = temp.array;
-            var temp = MapTools.rotateLeft(arrayObject.slice(0));
-            var left = { 'action': "left", 'array': temp };
-            temp = MapTools.rotateRight(arrayObject.slice(0));
-            var right = { 'action': "right", 'array': temp };
+        actions.push(temp);
+        if (find == false) {
+            var lefta = copyArr(temp.array);
+            var righta = copyArr(temp.array);
+
+            MapTools.rotateLeft(lefta);
+            var left = { 'action': "left", 'array': lefta, 'parent': temp};
+            MapTools.rotateRight(righta);
+            var right = { 'action': "right", 'array': righta, 'parent': temp};
             checkElements.push(left);
             checkElements.push(right);
         }
     }
 
+    var outAction = [];
+    var last = actions.pop();
+    while (last && last != "o" && last.parent)  {
+        outAction.push(last.action);
+        last = last.parent;
+    }
+
+    return outAction.reverse();
 }
 
-module.exports = MapTools;
+var testMap = [
+    [1, 1, 1, 1, 1, 1],
+    [1, 1, 2, 0, 0, 1],
+    [1, 1, 2, 2, 0, 1],
+    [1, 0, 4, 1, 0, 1],
+    [1, 0, 1, 3, 0, 1],
+    [1, 1, 1, 1, 1, 1],
+];
+
+var a = calculateFastStep(testMap);
+console.log(a);
