@@ -19,7 +19,7 @@ cc.Class({
         elementMoveableSquare: cc.Prefab,
         elementPlayerSquare: cc.Prefab,
         elementTargetSquare: cc.Prefab,
-        tiledSize: 80,
+        tiledSize: 40,
         mapState: { default: MapState.MAP_IDLE, type: cc.Enum(MapState)},
         rotate: 0,
     },
@@ -32,8 +32,8 @@ cc.Class({
             [1, 0, 3, 0, 0,0,1],
             [1, 0, 0, 1, 2,0,1],
             [1, 0, 2, 3, 1,0,1],
-            [1, 3, 0, 0, 0,0,1],
-            [1, 0, 4, 1, 1,1,1],
+            [1, 4, 0, 0, 0,0,1],
+            [1, 1, 1, 1, 1,1,1],
         ];
 
         this.createMap(testMap);
