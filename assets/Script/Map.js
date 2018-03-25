@@ -9,8 +9,6 @@ var mapTool = require('MapTools');
 var gameEvents = require('GameEvent');
 var moveMgr = require('MoveMgr');
 
-var EventControl = require("EventControl");
-
 cc.Class({
     extends: cc.Component,
 
@@ -21,21 +19,20 @@ cc.Class({
         elementMoveableSquare: cc.Prefab,
         elementPlayerSquare: cc.Prefab,
         elementTargetSquare: cc.Prefab,
-        tiledSize: 80,
+        tiledSize: 40,
         mapState: { default: MapState.MAP_IDLE, type: cc.Enum(MapState)},
         rotate: 0,
-        gameControl: cc.Node,
     },
 
     // use this for initialization
     onLoad: function () {
         var testMap = [
             [1, 1, 1, 1, 1,1,1],
-            [1, 3, 0, 0, 0,0,1],
-            [1, 0, 0, 0, 0,0,1],
-            [1, 4, 0, 1, 2,0,1],
-            [1, 0, 2, 0, 1,0,1],
-            [1, 0, 0, 0, 0,0,1],
+            [1, 2, 0, 0, 0,0,1],
+            [1, 0, 3, 0, 0,0,1],
+            [1, 0, 0, 1, 2,0,1],
+            [1, 0, 2, 3, 1,0,1],
+            [1, 4, 0, 0, 0,0,1],
             [1, 1, 1, 1, 1,1,1],
         ];
 
@@ -47,8 +44,6 @@ cc.Class({
      * @return {Void}
      */
     createMap: function (mapConfig) {
-        this.node.removeAllChildren();
-
         var n = mapConfig.length;
         var mapTopLeftPoint = new cc.Vec2(0,0);
         mapTopLeftPoint.x = -n * this.tiledSize * 0.5 + 0.5 * this.tiledSize;      
@@ -142,8 +137,7 @@ cc.Class({
                         if (line[j] == gameEvents.MAP_PLAYER && this.mapArray[next][j] == gameEvents.MAP_TARGET) {
                             downLength++;
                             next++;
-                            isEnd = true;
-                            break;                    
+                            isEnd = true;                    
                         }
                         else if(this.mapArray[next][j] == gameEvents.MAP_EMPTY) {
                             downLength++;
@@ -176,36 +170,19 @@ cc.Class({
             self.mapState = MapState.MAP_IDLE;
             if(isEnd){
                 self.mapState = MapState.MAP_FINISH;
-                self.gameControl.getComponent(EventControl).doGameWin();
             }
         });
 
     },
 
-    loadNext: function(){
-        this.mapState = MapState.MAP_IDLE;
-        var testMap = [
-            [1, 1, 1, 1, 1,1,1],
-            [1, 1, 0, 0, 0,0,1],
-            [1, 0, 0, 0, 0,0,1],
-            [1, 0, 4, 1, 2,0,1],
-            [1, 0, 2, 0, 1,0,1],
-            [1, 0, 3, 0, 0,0,1],
-            [1, 1, 1, 1, 1,1,1],
-        ];
-        this.createMap(testMap);
-    },
-
     registerEvent: function () {
         this.node.on(gameEvents.EVENT_ROTATE_LEFT, this.rotateLeft, this);
         this.node.on(gameEvents.EVENT_ROTATE_RIGHT, this.rotateRight, this);
-        this.node.on(gameEvents.EVENT_NEXT, this.loadNext, this);
     },
 
     unregisterEvent: function () {
         this.node.off(gameEvents.EVENT_ROTATE_LEFT, this.rotateLeft, this);
         this.node.off(gameEvents.EVENT_ROTATE_RIGHT, this.rotateRight, this);
-        this.node.off(gameEvents.EVENT_NEXT, this.loadNext, this);
     },
 
     onEnable: function () {

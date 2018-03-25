@@ -45,7 +45,7 @@
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
     "groupIndex": 0,
-    "autoReleaseAssets": null
+    "autoReleaseAssets": false
   },
   {
     "__type__": "cc.Node",
@@ -189,7 +189,7 @@
     "elementTargetSquare": {
       "__uuid__": "89927ad6-eb45-40e5-bd77-dc3db6edd37a"
     },
-    "tiledSize": 80,
+    "tiledSize": 40,
     "mapState": 1,
     "rotate": 0,
     "gameControl": {

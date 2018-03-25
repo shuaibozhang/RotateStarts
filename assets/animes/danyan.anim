@@ -1,0 +1,37 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "danyan",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 1.35,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0.21666666666666667,
+            "value": {
+              "__uuid__": "065e218c-3616-409d-948f-1c1124515cb8"
+            }
+          },
+          {
+            "frame": 0.9833333333333333,
+            "value": {
+              "__uuid__": "6807c8a8-fb49-4797-a386-156d5b4bc754"
+            }
+          },
+          {
+            "frame": 1.3333333333333333,
+            "value": {
+              "__uuid__": "6807c8a8-fb49-4797-a386-156d5b4bc754"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

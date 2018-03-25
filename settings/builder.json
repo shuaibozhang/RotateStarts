@@ -2,15 +2,14 @@
   "appKey": "",
   "appSecret": "",
   "encryptJs": true,
-  "excludeScenes": [
-    "7b723040-69ae-4483-aaf0-edd7189c5550"
-  ],
+  "excludeScenes": [],
+  "fb-instant-games": {},
   "includeAnySDK": false,
   "includeSDKBox": false,
   "inlineSpriteFrames": true,
   "inlineSpriteFrames_native": true,
   "jailbreakPlatform": false,
-  "md5Cache": false,
+  "md5Cache": true,
   "mergeStartScene": false,
   "oauthLoginServer": "",
   "optimizeHotUpdate": false,
@@ -22,14 +21,17 @@
   },
   "packageName": "org.cocos2d.helloworld",
   "privateKey": "",
+  "qqplay": {
+    "orientation": "portrait"
+  },
   "renderMode": "0",
   "startScene": "a1d34e4d-290d-4dea-9d75-96e6025dd192",
-  "title": "RotateRotate",
+  "title": "hello_world",
   "webOrientation": "auto",
   "wechatgame": {
     "appid": "",
     "orientation": "portrait"
   },
-  "xxteaKey": "285ab7b7-245d-44",
+  "xxteaKey": "8db32ee8-3de7-40",
   "zipCompressJs": true
 }
