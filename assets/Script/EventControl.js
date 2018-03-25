@@ -45,6 +45,34 @@ cc.Class({
                 }
                 break;
         }
+    },
+
+    doRotateLeft: function(){
+        console.log('Press a key: left');
+        for (var index = 0; index < this.actionListners.length; index++) {
+            var node = this.actionListners[index];
+            node.emit(gameEvents.EVENT_ROTATE_LEFT);
+        }
+    },
+
+    doRotateRight: function(){
+        for (var index = 0; index < this.actionListners.length; index++) {
+            var node = this.actionListners[index];
+            node.emit(gameEvents.EVENT_ROTATE_RIGHT);
+        }
+    },
+
+    doLoadNext: function(){
+        for (var index = 0; index < this.actionListners.length; index++) {
+            var node = this.actionListners[index];
+            node.emit(gameEvents.EVENT_NEXT);
+        }
+    },
+    doGameWin: function(){
+        for (var index = 0; index < this.actionListners.length; index++) {
+            var node = this.actionListners[index];
+            node.emit(gameEvents.EVENT_WIN);
+        }
     }
     // called every frame, uncomment this function to activate update callback
     // update: function (dt) {
