@@ -29,7 +29,7 @@ cc.Class({
         var testMap = [
             [1, 1, 1, 1, 1,1,1],
             [1, 2, 0, 0, 0,0,1],
-            [1, 0, 3, 0, 0,0,1],
+            [1, 0, 2, 0, 0,0,1],
             [1, 0, 0, 1, 2,0,1],
             [1, 0, 2, 3, 1,0,1],
             [1, 4, 0, 0, 0,0,1],
@@ -38,12 +38,18 @@ cc.Class({
 
         this.createMap(testMap);
     },
+
+    start: function(){
+        cc.zsb.eventControl.addLinsterNode(this.node);
+    },
+
     /**
      * 创建地图
      * @param  {Array}   mapConfig     带有地图信息的二维数组
      * @return {Void}
      */
     createMap: function (mapConfig) {
+        this.node.removeAllChildren();
         var n = mapConfig.length;
         var mapTopLeftPoint = new cc.Vec2(0,0);
         mapTopLeftPoint.x = -n * this.tiledSize * 0.5 + 0.5 * this.tiledSize;      
@@ -170,19 +176,37 @@ cc.Class({
             self.mapState = MapState.MAP_IDLE;
             if(isEnd){
                 self.mapState = MapState.MAP_FINISH;
+                cc.zsb.eventControl.doGameWin()
             }
         });
 
     },
 
+    loadNext: function(idx){
+        this.mapState = MapState.MAP_IDLE
+        var testMap = [
+            [1, 1, 1, 1, 1,1,1],
+            [1, 2, 0, 0, 0,0,1],
+            [1, 0, 1, 0, 0,0,1],
+            [1, 0, 0, 1, 2,0,1],
+            [1, 0, 1, 3, 1,0,1],
+            [1, 4, 0, 0, 0,0,1],
+            [1, 1, 1, 1, 1,1,1],
+        ];
+        this.node.rotation = 0;
+        this.createMap(testMap);
+    },
+
     registerEvent: function () {
         this.node.on(gameEvents.EVENT_ROTATE_LEFT, this.rotateLeft, this);
         this.node.on(gameEvents.EVENT_ROTATE_RIGHT, this.rotateRight, this);
+        this.node.on(gameEvents.EVENT_NEXT, this.loadNext, this);
     },
 
     unregisterEvent: function () {
         this.node.off(gameEvents.EVENT_ROTATE_LEFT, this.rotateLeft, this);
         this.node.off(gameEvents.EVENT_ROTATE_RIGHT, this.rotateRight, this);
+        this.node.off(gameEvents.EVENT_NEXT, this.loadNext, this);
     },
 
     onEnable: function () {

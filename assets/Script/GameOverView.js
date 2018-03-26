@@ -3,17 +3,21 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        mainNode: cc.Node
+        mainNode: cc.Node,
+        nextBtn: cc.Node
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
         this.mainNode.active = false;
+        this.nextBtn.on('click', function(event){
+            cc.zsb.eventControl.doLoadNext();
+        }, this);
     },
 
     start () {
-
+        cc.zsb.eventControl.addLinsterNode(this.node);
     },
 
     showGameOver: function(){

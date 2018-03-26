@@ -22,10 +22,18 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
-        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
+        
     },
     onDestroy() {
-        cc.systemEvent.off(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
+        
+    },
+
+    init: function(){
+        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
+    },
+
+    addLinsterNode: function(node){
+        this.actionListners.push(node);
     },
 
     onKeyDown: function ( event ) {
