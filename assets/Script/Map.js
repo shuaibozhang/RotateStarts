@@ -22,6 +22,8 @@ cc.Class({
         tiledSize: 40,
         mapState: { default: MapState.MAP_IDLE, type: cc.Enum(MapState)},
         rotate: 0,
+        leftBtn: cc.Node,
+        rightBtn: cc.Node,
     },
 
     // use this for initialization
@@ -37,6 +39,13 @@ cc.Class({
         ];
 
         this.createMap(testMap);
+
+        this.leftBtn.on('click', function(){
+            this.rotateLeft();
+        }, this);
+        this.rightBtn.on('click', function(){
+            this.rotateRight();
+        }, this);
     },
 
     start: function(){

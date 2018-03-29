@@ -19,14 +19,14 @@
     "portrait": false,
     "upsideDown": false
   },
-  "packageName": "org.cocos2d.helloworld",
+  "packageName": "com.zsb.rotatestar",
   "privateKey": "",
   "qqplay": {
     "orientation": "portrait"
   },
   "renderMode": "0",
   "startScene": "a1d34e4d-290d-4dea-9d75-96e6025dd192",
-  "title": "hello_world",
+  "title": "rotatefun",
   "webOrientation": "auto",
   "wechatgame": {
     "appid": "",
