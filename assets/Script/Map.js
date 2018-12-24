@@ -30,15 +30,17 @@ cc.Class({
     onLoad: function () {
         var testMap = [
             [1, 1, 1, 1, 1,1,1],
-            [1, 2, 0, 0, 0,0,1],
-            [1, 0, 2, 0, 0,0,1],
-            [1, 0, 0, 1, 2,0,1],
-            [1, 0, 2, 3, 1,0,1],
-            [1, 4, 0, 0, 0,0,1],
+            [1, 2, 3, 0, 0,0,1],
+            [1, 0, 1, 0, 0,0,1],
+            [1, 0, 4, 0, 0,0,1],
+            [1, 0, 0, 0, 0,0,1],
+            [1, 0, 0, 0, 0,0,1],
             [1, 1, 1, 1, 1,1,1],
         ];
 
+        
         this.createMap(testMap);
+        //cc.log(this.mapArray)
 
         this.leftBtn.on('click', function(){
             this.rotateLeft();
@@ -62,7 +64,7 @@ cc.Class({
         var n = mapConfig.length;
         var mapTopLeftPoint = new cc.Vec2(0,0);
         mapTopLeftPoint.x = -n * this.tiledSize * 0.5 + 0.5 * this.tiledSize;      
-        mapTopLeftPoint.y = n * this.tiledSize * 0.5 - + 0.5 * this.tiledSize;
+        mapTopLeftPoint.y = n * this.tiledSize * 0.5 - 0.5 * this.tiledSize;
 
         this.mapArray = mapConfig;
         this.mapElement = [];
@@ -111,7 +113,7 @@ cc.Class({
         var self = this;
         this.mapState = MapState.MAP_ROTATE;
         this.rotate = this.rotate - 90;
-        var action = cc.rotateBy(0.5, -90);
+        var action = cc.rotateBy(0.5, 90);
         var action2 = cc.callFunc(function () {
             self.enterCheckDown();
         })
@@ -127,7 +129,7 @@ cc.Class({
         var self = this;
         this.mapState = MapState.MAP_ROTATE;
         this.rotate = this.rotate + 90;
-        var action = cc.rotateBy(0.5, 90);
+        var action = cc.rotateBy(0.5, -90);
         var action2 = cc.callFunc(function () {
             self.enterCheckDown();
         })
@@ -142,6 +144,7 @@ cc.Class({
         var isEnd = false;
         this.mapState = MapState.MAP_DOWN;
         var n =  this.mapArray.length;
+        //cc.log(this.mapArray)
         for(var i = this.mapArray.length - 1; i >= 0; i--){
             var line =  this.mapArray[i];
             for(var j = 0; j < line.length; j++){
@@ -163,6 +166,7 @@ cc.Class({
                         }
                     }
                     next--;
+                    //if(false){
                     if(downLength > 0){
                         var temp = this.mapArray[i][j];
                         this.mapArray[i][j] =  gameEvents.MAP_EMPTY;
@@ -172,10 +176,13 @@ cc.Class({
                         this.mapElement[i][j] = this.mapElement[next][j];
                         this.mapElement[next][j] = temp2;               
                         
-                        var worldPos = temp2.convertToWorldSpaceAR(cc.v2(0, 0));
-                        worldPos.y = worldPos.y - downLength * this.tiledSize;
-                        var newVec2 = temp2.parent.convertToNodeSpaceAR(worldPos);
-                        moveMgr.addMove(temp2, newVec2, 0.1 * downLength);
+                        var poso = temp2.position;
+                        var moveoff = new cc.Vec2(0, -downLength * this.tiledSize);
+                        var radian = Math.PI * (this.rotate / 180);
+                        var x = moveoff.x * Math.cos(radian) - moveoff.y * Math.sin(radian)
+                        var y = moveoff.x * Math.sin(radian) + moveoff.y * Math.cos(radian)
+                        var posnew = new cc.Vec2(poso.x + x, poso.y + y);
+                        moveMgr.addMove(temp2, posnew, 0.1 * downLength);
                     }
                 }
             }
@@ -195,14 +202,15 @@ cc.Class({
         this.mapState = MapState.MAP_IDLE
         var testMap = [
             [1, 1, 1, 1, 1,1,1],
-            [1, 2, 0, 0, 0,0,1],
+            [1, 2, 3, 0, 0,0,1],
             [1, 0, 1, 0, 0,0,1],
-            [1, 0, 0, 1, 2,0,1],
-            [1, 0, 1, 3, 1,0,1],
-            [1, 4, 0, 0, 0,0,1],
+            [1, 0, 4, 0, 0,0,1],
+            [1, 0, 0, 0, 0,0,1],
+            [1, 0, 0, 0, 0,0,1],
             [1, 1, 1, 1, 1,1,1],
         ];
-        this.node.rotation = 0;
+        this.rotate = 0;
+        this.node.angle = 0;
         this.createMap(testMap);
     },
 
