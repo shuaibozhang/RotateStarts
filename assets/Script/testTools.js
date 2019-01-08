@@ -148,4 +148,4 @@ var testMap = [
 ];
 
 var a = calculateFastStep(testMap);
-console.log(a);
+//console.log(a);

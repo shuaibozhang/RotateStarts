@@ -1,0 +1,114 @@
+[
+  {
+    "__type__": "cc.Prefab",
+    "_name": "",
+    "_objFlags": 0,
+    "_native": "",
+    "data": {
+      "__id__": 1
+    },
+    "optimizationPolicy": 0,
+    "asyncLoadAssets": false
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "map",
+    "_objFlags": 0,
+    "_parent": null,
+    "_children": [],
+    "_active": true,
+    "_level": 0,
+    "_components": [
+      {
+        "__id__": 2
+      }
+    ],
+    "_prefab": {
+      "__id__": 3
+    },
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 0,
+      "height": 0
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_position": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_scale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_rotationX": 0,
+    "_rotationY": 0,
+    "_quat": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_zIndex": 0,
+    "groupIndex": 0,
+    "_id": ""
+  },
+  {
+    "__type__": "cea511XVW9LsbI8B3gYAPaI",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "mapArray": null,
+    "mapElement": null,
+    "elementStaticSquare": {
+      "__uuid__": "2a3b7ae3-487d-433b-b947-ce931573d97a"
+    },
+    "elementMoveableSquare": {
+      "__uuid__": "3b983356-373c-4bcf-a29a-a342ee6bc205"
+    },
+    "elementPlayerSquare": {
+      "__uuid__": "2ca6e88c-9fa9-4ddd-bab0-a13ed76e5c36"
+    },
+    "elementTargetSquare": {
+      "__uuid__": "89927ad6-eb45-40e5-bd77-dc3db6edd37a"
+    },
+    "tiledSize": 40,
+    "mapState": 1,
+    "rotate": 0,
+    "leftBtn": null,
+    "rightBtn": null,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1
+    },
+    "asset": {
+      "__id__": 0
+    },
+    "fileId": "c3h17iphpCM7QnyRIyT0cS",
+    "sync": false
+  }
+]

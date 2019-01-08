@@ -113,7 +113,7 @@ cc.Class({
         var self = this;
         this.mapState = MapState.MAP_ROTATE;
         this.rotate = this.rotate - 90;
-        var action = cc.rotateBy(0.5, 90);
+        var action = cc.rotateBy(0.5, -90);
         var action2 = cc.callFunc(function () {
             self.enterCheckDown();
         })
@@ -129,7 +129,7 @@ cc.Class({
         var self = this;
         this.mapState = MapState.MAP_ROTATE;
         this.rotate = this.rotate + 90;
-        var action = cc.rotateBy(0.5, -90);
+        var action = cc.rotateBy(0.5, 90);
         var action2 = cc.callFunc(function () {
             self.enterCheckDown();
         })
@@ -210,7 +210,7 @@ cc.Class({
             [1, 1, 1, 1, 1,1,1],
         ];
         this.rotate = 0;
-        this.node.angle = 0;
+        this.node.setRotation(0);
         this.createMap(testMap);
     },
 
