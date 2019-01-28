@@ -15,9 +15,6 @@
     "_children": [
       {
         "__id__": 2
-      },
-      {
-        "__id__": 37
       }
     ],
     "_active": true,
@@ -44,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.5571489120645993,
-      "y": 0.5571489120645993,
+      "x": 0.53876953125,
+      "y": 0.53876953125,
       "z": 1
     },
     "_quat": {
@@ -303,7 +300,7 @@
       "__uuid__": "3b983356-373c-4bcf-a29a-a342ee6bc205"
     },
     "elementPlayerSquare": {
-      "__uuid__": "2ca6e88c-9fa9-4ddd-bab0-a13ed76e5c36"
+      "__uuid__": "4a7f78cd-3e8a-4490-a9d0-d4961d9aa093"
     },
     "elementTargetSquare": {
       "__uuid__": "89927ad6-eb45-40e5-bd77-dc3db6edd37a"
@@ -1489,92 +1486,5 @@
     },
     "_enabled": true,
     "_id": "16W2MA58tCO6Z5w2bJyMbR"
-  },
-  {
-    "__type__": "cc.Node",
-    "_name": "Role_0_ske",
-    "_objFlags": 0,
-    "_parent": {
-      "__id__": 1
-    },
-    "_children": [],
-    "_active": true,
-    "_level": 1,
-    "_components": [
-      {
-        "__id__": 38
-      }
-    ],
-    "_prefab": null,
-    "_opacity": 255,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
-      "a": 255
-    },
-    "_contentSize": {
-      "__type__": "cc.Size",
-      "width": 0,
-      "height": 0
-    },
-    "_anchorPoint": {
-      "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
-    },
-    "_position": {
-      "__type__": "cc.Vec3",
-      "x": 224,
-      "y": 140,
-      "z": 0
-    },
-    "_scale": {
-      "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
-      "z": 1
-    },
-    "_rotationX": 0,
-    "_rotationY": 0,
-    "_quat": {
-      "__type__": "cc.Quat",
-      "x": 0,
-      "y": 0,
-      "z": 0,
-      "w": 1
-    },
-    "_skewX": 0,
-    "_skewY": 0,
-    "_zIndex": 0,
-    "groupIndex": 0,
-    "_id": "590bnO2R1O/aWm49r4cTZF"
-  },
-  {
-    "__type__": "dragonBones.ArmatureDisplay",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 37
-    },
-    "_enabled": true,
-    "_srcBlendFactor": 770,
-    "_dstBlendFactor": 771,
-    "_armatureName": "Armature",
-    "_animationName": "idle",
-    "playTimes": -1,
-    "premultipliedAlpha": false,
-    "_N$dragonAsset": {
-      "__uuid__": "19f8f674-6662-476a-a85f-c96e2090639a"
-    },
-    "_N$dragonAtlasAsset": {
-      "__uuid__": "a48e8d7e-58ab-42d5-8848-f5eb7b00d1d3"
-    },
-    "_N$_defaultArmatureIndex": 0,
-    "_N$_animationIndex": 1,
-    "_N$timeScale": 1,
-    "_N$debugBones": false,
-    "_id": "c8TGwHHEZJfKWe28LH8UXi"
   }
 ]

@@ -96,7 +96,10 @@ cc.Class({
             return cc.instantiate(this.elementMoveableSquare);
         }
         else if(elementid == gameEvents.MAP_PLAYER){
-            return cc.instantiate(this.elementPlayerSquare);
+            var player = cc.instantiate(this.elementPlayerSquare);
+            player.addComponent("RoleKeep");
+            player.getComponent("RoleKeep").map = this.node;
+            return player;
         }
         else if (elementid == gameEvents.MAP_TARGET) {
             return cc.instantiate(this.elementTargetSquare);
